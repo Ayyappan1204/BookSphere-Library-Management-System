@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BookSphere - Transaction Management</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(15,23,42,.82),rgba(15,23,42,.82)),
+url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1800&q=80");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+min-height:100vh;
+
+}
+
+.glass{
+
+background:rgba(255,255,255,.95);
+
+backdrop-filter:blur(18px);
+
+border-radius:30px;
+
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+
+}
+
+.table-hover tbody tr{
+
+transition:.3s;
+
+}
+
+.table-hover tbody tr:hover{
+
+background:#FEF3C7;
+
+transform:scale(1.003);
+
+}
+
+.nav-link{
+
+transition:.3s;
+
+}
+
+.nav-link:hover{
+
+background:#374151;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="bg-gray-900/95 backdrop-blur-md text-white shadow-lg sticky top-0 z-50">
+
+<div class="container mx-auto px-6 py-4 flex justify-between items-center flex-wrap">
+
+<div class="flex items-center gap-3">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+class="h-8 w-8 text-yellow-400"
+viewBox="0 0 20 20"
+fill="currentColor">
+
+<path fill-rule="evenodd"
+d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 11-2 0V4zM16 5a1 1 0 100-2 1 1 0 000 2z"
+clip-rule="evenodd"/>
+
+</svg>
+
+<a
+th:href="@{/}"
+class="text-2xl font-bold hover:text-yellow-400 transition">
+
+BookSphere
+
+</a>
+
+</div>
+
+<nav class="flex flex-wrap gap-2 mt-3 md:mt-0">
+
+<a
+th:href="@{/}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Home
+
+</a>
+
+<a
+th:href="@{/books}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Book Management
+
+</a>
+
+<a
+th:href="@{/members}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Member Management
+
+</a>
+
+<a
+th:href="@{/issues}"
+class="bg-yellow-500 text-gray-900 px-3 py-2 rounded-lg font-semibold">
+
+Transaction Management
+
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<div class="container mx-auto px-6 py-10">
+
+<div class="glass p-8">
+
+<h2 class="text-4xl font-extrabold text-gray-800 mb-8">
+
+📖 Transaction Management
+
+</h2>
+
+<div
+th:if="${successMessage}"
+class="bg-green-100 text-green-700 p-4 rounded-xl mb-5"
+th:text="${successMessage}">
+</div>
+
+<div
+th:if="${errorMessage}"
+class="bg-red-100 text-red-700 p-4 rounded-xl mb-5"
+th:text="${errorMessage}">
+</div>
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-4 mb-8">
+
+<a
+th:href="@{/issues/issue}"
+class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl shadow-lg font-semibold transition">
+
+📚 Issue New Book
+
+</a>
+
+<form
+th:action="@{/issues}"
+method="get"
+class="flex flex-col md:flex-row gap-3 w-full lg:w-auto">
+
+<input
+type="text"
+name="keyword"
+th:value="${keyword}"
+placeholder="Search by Book or Member..."
+class="w-full md:w-96 px-5 py-3 border rounded-xl">
+
+<button
+type="submit"
+class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl">
+
+Search
+
+</button>
+
+<a
+th:href="@{/issues}"
+class="bg-gray-300 hover:bg-gray-400 px-6 py-3 rounded-xl text-center">
+
+Clear
+
+</a>
+
+</form>
+
+</div>
+
+<div
+th:if="${issues.empty}"
+class="bg-white rounded-2xl shadow-lg p-10 text-center">
+
+<p class="text-gray-600 text-lg">
+
+<span
+th:if="${keyword != null and !keyword.isEmpty()}">
+
+No issued books found for
+<strong th:text="${keyword}"></strong>
+
+</span>
+
+<span
+th:unless="${keyword != null and !keyword.isEmpty()}">
+
+No books are currently issued.
+
+</span>
+
+</p>
+
+</div>
+
+<div
+th:unless="${issues.empty}"
+class="overflow-x-auto bg-white rounded-2xl shadow-xl">
+
+<table class="min-w-full table-hover">
+
+<thead class="bg-gray-800 text-white">
+
+<tr>
+
+<th class="px-6 py-4 text-left">
+
+ID
+
+</th>
+
+<th class="px-6 py-4 text-left">
+
+Book Title
+
+</th>
+
+<th class="px-6 py-4 text-left">
+
+Member
+
+</th>
+
+<th class="px-6 py-4 text-left">
+
+Issue Date
+
+</th>
+
+<th class="px-6 py-4 text-left">
+
+Due Date
+
+</th>
+
+<th class="px-6 py-4 text-center">
+
+Status
+
+</th>
+
+<th class="px-6 py-4 text-center">
+
+Action
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody class="divide-y divide-gray-200">
+    <tr th:each="issue : ${issues}" class="hover:bg-yellow-50 transition duration-300">
+
+<td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-800"
+    th:text="${issue.id}">
+
+1
+
+</td>
+
+<td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-800"
+    th:text="${issue.book.title}">
+
+Java Programming
+
+</td>
+
+<td class="px-6 py-4 whitespace-nowrap text-gray-700"
+    th:text="${issue.member.name}">
+
+John Doe
+
+</td>
+
+<td class="px-6 py-4 whitespace-nowrap text-gray-600"
+    th:text="${issue.issueDate}">
+
+2026-07-12
+
+</td>
+
+<td class="px-6 py-4 whitespace-nowrap font-semibold text-red-600"
+    th:text="${issue.dueDate}">
+
+2026-07-26
+
+</td>
+
+<td class="px-6 py-4 text-center">
+
+<span
+th:if="${issue.status=='ISSUED'}"
+class="inline-flex px-4 py-1 rounded-full bg-yellow-100 text-yellow-800 font-semibold text-xs">
+
+📖 ISSUED
+
+</span>
+
+<span
+th:if="${issue.status=='RETURNED'}"
+class="inline-flex px-4 py-1 rounded-full bg-green-100 text-green-700 font-semibold text-xs">
+
+✅ RETURNED
+
+</span>
+
+<span
+th:if="${issue.status=='OVERDUE'}"
+class="inline-flex px-4 py-1 rounded-full bg-red-100 text-red-700 font-semibold text-xs">
+
+⚠ OVERDUE
+
+</span>
+
+</td>
+
+<td class="px-6 py-4 text-center whitespace-nowrap">
+
+<a
+th:if="${issue.status=='ISSUED' || issue.status=='OVERDUE'}"
+th:href="@{/issues/return/{id}(id=${issue.id})}"
+onclick="return confirm('Confirm return of this book?');"
+class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition">
+
+↩ Return
+
+</a>
+
+<span
+th:if="${issue.status=='RETURNED'}"
+class="text-gray-400 font-medium">
+
+Completed
+
+</span>
+
+</td>
+
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

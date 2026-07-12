@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BookSphere | Smart Library Management System</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+
+background:#F8FAFC;
+overflow-x:hidden;
+
+}
+
+.hero{
+
+position:relative;
+height:100vh;
+
+background:
+
+linear-gradient(rgba(15,23,42,.78),
+rgba(15,23,42,.78)),
+
+url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1800&q=80");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+}
+
+.hero::before{
+
+content:'';
+
+position:absolute;
+
+width:700px;
+height:700px;
+
+background:#2563eb55;
+
+filter:blur(150px);
+
+border-radius:50%;
+
+top:-250px;
+left:-200px;
+
+animation:float1 12s infinite linear;
+
+}
+
+.hero::after{
+
+content:'';
+
+position:absolute;
+
+width:650px;
+height:650px;
+
+background:#16a34a55;
+
+filter:blur(140px);
+
+border-radius:50%;
+
+bottom:-250px;
+right:-150px;
+
+animation:float2 15s infinite linear;
+
+}
+
+@keyframes float1{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(50px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+
+@keyframes float2{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-60px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+
+.nav-link{
+
+transition:.3s;
+
+}
+
+.nav-link:hover{
+
+color:#FACC15;
+
+}
+
+.hero-title{
+
+font-size:70px;
+font-weight:900;
+line-height:1.1;
+
+animation:fadeDown 1.2s ease;
+
+}
+
+.hero-text{
+
+font-size:22px;
+
+color:#E5E7EB;
+
+margin-top:25px;
+
+animation:fadeUp 1.5s ease;
+
+}
+
+@keyframes fadeDown{
+
+from{
+
+opacity:0;
+transform:translateY(-60px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+transform:translateY(60px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+.hero-btn{
+
+padding:18px 42px;
+
+border-radius:14px;
+
+font-weight:700;
+
+transition:.35s;
+
+display:inline-block;
+
+text-decoration:none;
+
+}
+
+.hero-btn:hover{
+
+transform:translateY(-6px);
+
+}
+
+.blue{
+
+background:#2563EB;
+color:white;
+
+}
+
+.green{
+
+background:#16A34A;
+color:white;
+
+}
+
+.glass{
+
+backdrop-filter:blur(20px);
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="bg-gray-900/95 backdrop-blur-md text-white shadow-lg sticky top-0 z-50">
+
+<div class="container mx-auto px-8 py-5 flex justify-between items-center">
+
+<div class="flex items-center gap-4">
+
+<div class="text-5xl">
+
+📚
+
+</div>
+
+<div>
+
+<h1 class="text-3xl font-extrabold text-yellow-400">
+
+BookSphere
+
+</h1>
+
+<p class="text-gray-300 text-sm">
+
+Modern Library Management System
+
+</p>
+
+</div>
+
+</div>
+
+<nav class="hidden lg:flex space-x-8 text-lg">
+
+<a th:href="@{/}" class="nav-link text-yellow-400">
+
+Home
+
+</a>
+
+<a th:href="@{/books}" class="nav-link">
+
+Books
+
+</a>
+
+<a th:href="@{/members}" class="nav-link">
+
+Members
+
+</a>
+
+<a th:href="@{/issues}" class="nav-link">
+
+Transactions
+
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<div class="container mx-auto px-6 text-center text-white relative z-10">
+
+<div class="glass p-10 max-w-5xl mx-auto">
+
+<h2 class="hero-title">
+
+Smart Library
+
+<br>
+
+<span class="text-yellow-400">
+
+Management System
+
+</span>
+
+</h2>
+
+<p class="hero-text">
+
+Manage books, members and borrowing records with a modern,
+fast and secure digital platform built using Spring Boot,
+MySQL and Thymeleaf.
+
+</p>
+
+<div class="mt-12 flex flex-wrap justify-center gap-6">
+
+<a th:href="@{/books}" class="hero-btn blue">
+
+📚 Explore Books
+
+</a>
+
+<a th:href="@{/members/add}" class="hero-btn green">
+
+👤 Register Member
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- LIVE DASHBOARD STARTS -->
+<!-- ========================= -->
+
+<section class="py-24 bg-white">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Live Dashboard
+
+</h2>
+
+<p class="text-gray-500 mt-4 text-xl">
+
+Real-time statistics from your library database
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+    <!-- ===== Dashboard Cards ===== -->
+
+<div class="group bg-white rounded-3xl shadow-xl p-10 text-center border border-gray-100
+            hover:shadow-2xl hover:-translate-y-3 transition-all duration-500">
+
+<div class="text-6xl mb-5">
+
+📚
+
+</div>
+
+<h3
+id="booksCounter"
+th:text="${totalBooks}"
+class="text-6xl font-extrabold text-blue-600">
+
+0
+
+</h3>
+
+<p class="mt-5 text-gray-600 text-xl">
+
+Total Books
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl shadow-xl p-10 text-center border border-gray-100
+            hover:shadow-2xl hover:-translate-y-3 transition-all duration-500">
+
+<div class="text-6xl mb-5">
+
+👨‍🎓
+
+</div>
+
+<h3
+id="memberCounter"
+th:text="${totalMembers}"
+class="text-6xl font-extrabold text-green-600">
+
+0
+
+</h3>
+
+<p class="mt-5 text-gray-600 text-xl">
+
+Registered Members
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl shadow-xl p-10 text-center border border-gray-100
+            hover:shadow-2xl hover:-translate-y-3 transition-all duration-500">
+
+<div class="text-6xl mb-5">
+
+📖
+
+</div>
+
+<h3
+id="issueCounter"
+th:text="${issuedBooks}"
+class="text-6xl font-extrabold text-red-500">
+
+0
+
+</h3>
+
+<p class="mt-5 text-gray-600 text-xl">
+
+Books Issued
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl shadow-xl p-10 text-center border border-gray-100
+            hover:shadow-2xl hover:-translate-y-3 transition-all duration-500">
+
+<div class="text-6xl mb-5">
+
+✅
+
+</div>
+
+<h3
+id="availableCounter"
+th:text="${availableBooks}"
+class="text-6xl font-extrabold text-yellow-500">
+
+0
+
+</h3>
+
+<p class="mt-5 text-gray-600 text-xl">
+
+Available Books
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================================ -->
+<!-- Why BookSphere Section -->
+<!-- ================================ -->
+
+<section class="py-24 bg-gray-50">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Why Choose BookSphere?
+
+</h2>
+
+<p class="text-gray-500 text-xl mt-4">
+
+A complete digital solution for modern libraries.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-10">
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+📚
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Book Management
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Manage books with ISBN, author, category,
+publisher, shelf number and quantity in seconds.
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+👥
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Member Management
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Maintain member information, department,
+membership status and complete history.
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+📖
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Issue & Return
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Track issued books, due dates,
+returns and borrowing history.
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+🔍
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Smart Search
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Find books and members instantly
+using intelligent keyword search.
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+📊
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Reports
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Generate real-time reports and
+dashboard statistics from MySQL.
+
+</p>
+
+</div>
+
+<div class="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+<div class="text-6xl mb-6">
+
+🔒
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Secure Platform
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Built using Spring Boot,
+MySQL and Thymeleaf with
+reliable data management.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- Quick Actions Starts -->
+<!-- ===================================== -->
+
+<section class="py-24">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Quick Actions
+
+</h2>
+
+<p class="text-xl text-gray-500 mt-4">
+
+Access the most frequently used features instantly.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+    <!-- ========================= -->
+<!-- Quick Action Cards -->
+<!-- ========================= -->
+
+<div class="group bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl shadow-2xl p-8 text-center text-white hover:scale-105 transition-all duration-500">
+
+<div class="text-6xl mb-6">
+
+📚
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Manage Books
+
+</h3>
+
+<p class="text-blue-100 mb-8">
+
+Add, edit, search and organize your library books.
+
+</p>
+
+<a
+th:href="@{/books}"
+class="inline-block bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-100 transition">
+
+Explore Books ⭐
+
+</a>
+
+</div>
+
+<div class="group bg-gradient-to-br from-green-600 to-green-700 rounded-3xl shadow-2xl p-8 text-center text-white hover:scale-105 transition-all duration-500">
+
+<div class="text-6xl mb-6">
+
+👨‍🎓
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Members
+
+</h3>
+
+<p class="text-green-100 mb-8">
+
+Register, edit and maintain all library members.
+
+</p>
+
+<a
+th:href="@{/members}"
+class="inline-block bg-white text-green-700 font-bold px-6 py-3 rounded-xl hover:bg-green-100 transition">
+
+Manage Members ⭐
+
+</a>
+
+</div>
+
+<div class="group bg-gradient-to-br from-red-500 to-red-600 rounded-3xl shadow-2xl p-8 text-center text-white hover:scale-105 transition-all duration-500">
+
+<div class="text-6xl mb-6">
+
+📖
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Transactions
+
+</h3>
+
+<p class="text-red-100 mb-8">
+
+Issue books, return books and track due dates.
+
+</p>
+
+<a
+th:href="@{/issues}"
+class="inline-block bg-white text-red-600 font-bold px-6 py-3 rounded-xl hover:bg-red-100 transition">
+
+View Transactions ⭐
+
+</a>
+
+</div>
+
+<div class="group bg-gradient-to-br from-yellow-500 to-orange-500 rounded-3xl shadow-2xl p-8 text-center text-white hover:scale-105 transition-all duration-500">
+
+<div class="text-6xl mb-6">
+
+📈
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Dashboard
+
+</h3>
+
+<p class="text-yellow-100 mb-8">
+
+View live reports and statistics from MySQL.
+
+</p>
+
+<a
+href="#"
+class="inline-block bg-white text-orange-600 font-bold px-6 py-3 rounded-xl hover:bg-yellow-100 transition">
+
+View Dashboard ⭐
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Library Gallery -->
+<!-- ========================= -->
+
+<section class="py-24 bg-gradient-to-b from-gray-50 to-white">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Explore BookSphere
+
+</h2>
+
+<p class="text-gray-500 text-xl mt-5">
+
+A beautiful digital experience for every reader.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-3 gap-10">
+
+<div class="group overflow-hidden rounded-3xl shadow-2xl">
+
+<img
+
+src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80"
+
+class="h-80 w-full object-cover group-hover:scale-110 transition duration-700">
+
+<div class="bg-white p-8">
+
+<h3 class="text-2xl font-bold mb-3">
+
+Modern Library
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Organize thousands of books in one modern platform.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="group overflow-hidden rounded-3xl shadow-2xl">
+
+<img
+
+src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=80"
+
+class="h-80 w-full object-cover group-hover:scale-110 transition duration-700">
+
+<div class="bg-white p-8">
+
+<h3 class="text-2xl font-bold mb-3">
+
+Knowledge Center
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Create an organized learning environment for students.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="group overflow-hidden rounded-3xl shadow-2xl">
+
+<img
+
+src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80"
+
+class="h-80 w-full object-cover group-hover:scale-110 transition duration-700">
+
+<div class="bg-white p-8">
+
+<h3 class="text-2xl font-bold mb-3">
+
+Digital Collection
+
+</h3>
+
+<p class="text-gray-600 leading-8">
+
+Manage books efficiently using BookSphere technology.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Timing Section -->
+<!-- ========================= -->
+
+<section class="py-24 bg-gray-900 text-white">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Library Hours
+
+</h2>
+
+<p class="text-gray-300 text-xl mt-5">
+
+Visit us during our operating hours.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+
+<div class="bg-white/10 rounded-3xl p-8 text-center backdrop-blur-md hover:bg-blue-600 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+📅
+
+</div>
+
+<h3 class="text-2xl font-bold">
+
+Monday - Friday
+
+</h3>
+
+<p class="text-gray-200 mt-3">
+
+8:00 AM - 8:00 PM
+
+</p>
+
+</div>
+
+<div class="bg-white/10 rounded-3xl p-8 text-center backdrop-blur-md hover:bg-green-600 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+📚
+
+</div>
+
+<h3 class="text-2xl font-bold">
+
+Saturday
+
+</h3>
+
+<p class="text-gray-200 mt-3">
+
+9:00 AM - 5:00 PM
+
+</p>
+
+</div>
+
+<div class="bg-white/10 rounded-3xl p-8 text-center backdrop-blur-md hover:bg-yellow-500 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+🌐
+
+</div>
+
+<h3 class="text-2xl font-bold">
+
+Digital Library
+
+</h3>
+
+<p class="text-gray-200 mt-3">
+
+Available 24 × 7
+
+</p>
+
+</div>
+
+<div class="bg-white/10 rounded-3xl p-8 text-center backdrop-blur-md hover:bg-red-500 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+📞
+
+</div>
+
+<h3 class="text-2xl font-bold">
+
+Support Desk
+
+</h3>
+
+<p class="text-gray-200 mt-3">
+
+8:30 AM - 6:00 PM
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- About BookSphere Starts -->
+<!-- ========================= -->
+
+<section class="py-24 bg-white">
+
+<div class="container mx-auto px-8">
+    <div class="max-w-7xl mx-auto">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+About BookSphere Library
+
+</h2>
+
+<p class="text-xl text-gray-500 mt-5">
+
+Empowering learning through knowledge, technology, and innovation.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+
+<div>
+
+<img
+
+src="https://images.unsplash.com/photo-1526243741027-444d633d7365?auto=format&fit=crop&w=1200&q=80"
+
+class="rounded-3xl shadow-2xl hover:scale-105 transition duration-700">
+
+</div>
+
+<div>
+
+<h3 class="text-4xl font-bold mb-8">
+
+A Modern Learning Environment
+
+</h3>
+
+<p class="text-gray-600 leading-9 text-lg mb-6">
+
+BookSphere Library is designed to provide students, researchers, and
+faculty members with seamless access to books and digital resources.
+The platform simplifies library operations through intelligent book
+management, member registration, and transaction tracking.
+
+</p>
+
+<p class="text-gray-600 leading-9 text-lg">
+
+Our goal is to create an efficient, secure, and user-friendly library
+management experience that supports academic excellence and lifelong learning.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Library Services -->
+<!-- ========================= -->
+
+<section class="py-24 bg-gray-100">
+
+<div class="container mx-auto px-8">
+
+<div class="text-center mb-16">
+
+<h2 class="text-5xl font-extrabold">
+
+Library Services
+
+</h2>
+
+<p class="text-gray-500 text-xl mt-5">
+
+Comprehensive services designed for every reader.
+
+</p>
+
+</div>
+
+<div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+
+<div class="bg-white rounded-3xl shadow-xl p-8 text-center hover:-translate-y-3 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+📖
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Book Lending
+
+</h3>
+
+<p class="text-gray-600">
+
+Easy borrowing and returning of books.
+
+</p>
+
+</div>
+
+<div class="bg-white rounded-3xl shadow-xl p-8 text-center hover:-translate-y-3 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+💻
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Digital Resources
+
+</h3>
+
+<p class="text-gray-600">
+
+Access digital books and learning materials.
+
+</p>
+
+</div>
+
+<div class="bg-white rounded-3xl shadow-xl p-8 text-center hover:-translate-y-3 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+📚
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Reference Section
+
+</h3>
+
+<p class="text-gray-600">
+
+Reference books, journals and research materials.
+
+</p>
+
+</div>
+
+<div class="bg-white rounded-3xl shadow-xl p-8 text-center hover:-translate-y-3 transition duration-500">
+
+<div class="text-6xl mb-5">
+
+🤝
+
+</div>
+
+<h3 class="text-2xl font-bold mb-4">
+
+Member Support
+
+</h3>
+
+<p class="text-gray-600">
+
+Dedicated assistance for all library members.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+
+<footer class="bg-gray-900 text-white">
+
+    <div class="container mx-auto px-8 py-16">
+
+        <div class="grid md:grid-cols-3 gap-12">
+
+            <!-- BookSphere -->
+            <div>
+
+                <h2 class="text-4xl font-extrabold text-yellow-400 mb-5">
+                    📚 BookSphere
+                </h2>
+
+                <p class="text-gray-400 leading-8">
+                    BookSphere is a modern library management platform that
+                    simplifies book cataloguing, member registration,
+                    circulation management, and library administration through
+                    an intuitive interface.
+                </p>
+
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+
+                <h3 class="text-2xl font-bold mb-5">
+                    Quick Links
+                </h3>
+
+                <ul class="space-y-3">
+
+                    <li>
+                        <a th:href="@{/}" class="hover:text-yellow-400 transition">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/books}" class="hover:text-yellow-400 transition">
+                            Books
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/members}" class="hover:text-yellow-400 transition">
+                            Members
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/issues}" class="hover:text-yellow-400 transition">
+                            Transactions
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+            
+            <!-- Contact -->
+
+<div>
+
+    <h3 class="text-2xl font-bold mb-5">
+
+        Contact
+
+    </h3>
+
+    <ul class="space-y-4 text-gray-400">
+
+        <li>
+            📍 MIT Campus, Chromepet, Chennai - 600044
+        </li>
+
+        <li>
+            📞 +91 98765 43210
+        </li>
+
+        <li>
+            📧 library@booksphere.com
+        </li>
+
+
+    </ul>
+
+        </div>
+
+        </div>
+
+        <!-- Divider -->
+        <hr class="border-gray-700 my-10">
+
+        <!-- Copyright -->
+        <div class="text-center text-gray-400 space-y-2">
+
+    <p>
+
+        © 2026 BookSphere Library. All Rights Reserved.
+
+    </p>
+
+    <p class="text-sm">
+
+        Crafted with ❤️ by
+        <span class="text-yellow-400 font-semibold">
+
+            Ayyappan
+
+        </span>
+
+    </p>
+
+</div>
+
+    </div>
+
+</footer>
+
+<script>
+
+window.addEventListener("scroll",function(){
+
+document.querySelectorAll(".group").forEach(function(card){
+
+const top=card.getBoundingClientRect().top;
+
+if(top<window.innerHeight-100){
+
+card.classList.add("opacity-100","translate-y-0");
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+{
+  "info": {
+    "name": "Library REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Get all books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:9999/api/books",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "books"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create book",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Example Book\", \"author\": \"Author\", \"isbn\": \"1234\", \"quantity\": 5}"
+        },
+        "url": {
+          "raw": "http://localhost:9999/api/books",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "books"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get all members",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:9999/api/members",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "members"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create member",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Riyash\", \"email\": \"riyash@example.com\", \"phone\": \"9876543210\"}"
+        },
+        "url": {
+          "raw": "http://localhost:9999/api/members",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "members"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create issue (bookId/memberId)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"bookId\": 7, \"memberId\": 3}"
+        },
+        "url": {
+          "raw": "http://localhost:9999/api/issues",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "issues"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Return issue (check-in)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:9999/api/issues/1/return",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9999",
+          "path": [
+            "api",
+            "issues",
+            "1",
+            "return"
+          ]
+        }
+      }
+    }
+  ]
+}

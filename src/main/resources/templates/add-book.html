@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BookSphere - Add New Book</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+
+    background:
+    linear-gradient(rgba(15,23,42,.82),rgba(15,23,42,.82)),
+    url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1800&q=80");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    min-height:100vh;
+
+}
+
+.glass{
+
+    background:rgba(255,255,255,.95);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:30px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+
+}
+
+input,
+select{
+
+    transition:.3s;
+
+}
+
+input:focus,
+select:focus{
+
+    outline:none;
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+
+}
+
+.nav-link{
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    background:#374151;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="bg-gray-900/95 backdrop-blur-md text-white shadow-lg sticky top-0 z-50">
+
+<div class="container mx-auto px-6 py-4 flex justify-between items-center flex-wrap">
+
+<div class="flex items-center gap-3">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+class="h-8 w-8 text-yellow-400"
+viewBox="0 0 20 20"
+fill="currentColor">
+
+<path fill-rule="evenodd"
+d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 11-2 0V4zM16 5a1 1 0 100-2 1 1 0 000 2z"
+clip-rule="evenodd"/>
+
+</svg>
+
+<a th:href="@{/}"
+class="text-2xl font-bold hover:text-yellow-400 transition">
+
+BookSphere
+
+</a>
+
+</div>
+
+<nav class="flex flex-wrap gap-2 mt-3 md:mt-0">
+
+<a th:href="@{/}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Home
+
+</a>
+
+<a th:href="@{/books}"
+class="bg-yellow-500 text-gray-900 px-3 py-2 rounded-lg font-semibold">
+
+Book Management
+
+</a>
+
+<a th:href="@{/members}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Member Management
+
+</a>
+
+<a th:href="@{/issues}"
+class="nav-link px-3 py-2 rounded-lg">
+
+Transaction Management
+
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<div class="container mx-auto px-6 py-10">
+
+<div class="max-w-5xl mx-auto glass p-10">
+
+<h2 class="text-4xl font-extrabold text-gray-800 mb-10">
+
+📚 Add New Book
+
+</h2>
+
+<form th:action="@{/addbook}"
+th:object="${book}"
+method="post">
+
+<div class="grid md:grid-cols-2 gap-6">
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+Book ID
+
+</label>
+
+<input
+type="text"
+th:field="*{bookId}"
+readonly
+placeholder="Auto Generated"
+class="w-full px-4 py-3 rounded-xl border bg-gray-100">
+
+</div>
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+ISBN
+
+</label>
+
+<input
+type="text"
+th:field="*{isbn}"
+class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+Title
+
+</label>
+
+<input
+type="text"
+th:field="*{title}"
+required
+class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+Author
+
+</label>
+
+<input
+type="text"
+th:field="*{author}"
+required
+class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+Category
+
+</label>
+
+<select
+th:field="*{category}"
+class="w-full px-4 py-3 rounded-xl border">
+
+<option value="">Select Category</option>
+
+<option value="Programming">Programming</option>
+
+<option value="Database">Database</option>
+
+<option value="Networking">Networking</option>
+
+<option value="Operating System">Operating System</option>
+
+<option value="Artificial Intelligence">Artificial Intelligence</option>
+
+<option value="Machine Learning">Machine Learning</option>
+
+<option value="Other">Other</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label class="block font-semibold mb-2">
+
+Language
+
+</label>
+
+<select
+th:field="*{language}"
+class="w-full px-4 py-3 rounded-xl border">
+
+<option value="">Select Language</option>
+
+<option value="English">English</option>
+
+<option value="Tamil">Tamil</option>
+
+<option value="Hindi">Hindi</option>
+
+<option value="French">French</option>
+
+<option value="German">German</option>
+
+</select>
+
+</div>
+    
+    <div>
+
+    <label class="block font-semibold mb-2">
+
+        Publisher
+
+    </label>
+
+    <input
+        type="text"
+        th:field="*{publisher}"
+        class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+    <label class="block font-semibold mb-2">
+
+        Edition
+
+    </label>
+
+    <input
+        type="text"
+        th:field="*{edition}"
+        class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+    <label class="block font-semibold mb-2">
+
+        Shelf Number
+
+    </label>
+
+    <input
+        type="text"
+        th:field="*{shelfNumber}"
+        class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div>
+
+    <label class="block font-semibold mb-2">
+
+        Quantity
+
+    </label>
+
+    <input
+        type="number"
+        min="1"
+        th:field="*{quantity}"
+        required
+        class="w-full px-4 py-3 rounded-xl border">
+
+</div>
+
+<div class="md:col-span-2">
+
+    <label class="inline-flex items-center gap-3">
+
+        <input
+            type="checkbox"
+            th:field="*{available}"
+            class="w-5 h-5 text-green-600 rounded">
+
+        <span class="font-semibold text-gray-700">
+
+            Available for Issue
+
+        </span>
+
+    </label>
+
+</div>
+
+</div>
+
+<div class="mt-10 flex flex-col md:flex-row justify-between gap-5">
+
+    <a
+        th:href="@{/books}"
+        class="px-8 py-3 rounded-xl bg-gray-700 text-white text-center font-semibold hover:bg-gray-800 transition">
+
+        ← Back to Books
+
+    </a>
+
+    <button
+        type="submit"
+        class="px-8 py-3 rounded-xl bg-green-600 text-white font-semibold shadow-lg hover:bg-green-700 hover:scale-105 transition duration-300">
+
+        💾 Save Book
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
