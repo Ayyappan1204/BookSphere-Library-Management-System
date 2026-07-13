@@ -64,7 +64,8 @@ BookSphere is a full-stack Smart Library Management System designed to simplify 
 ## 📸 Project Screenshots
 
 ### 🏠 Dashboard
-> *(Add dashboard screenshot here)*
+> *<img width="1361" height="639" alt="image" src="https://github.com/user-attachments/assets/ad74294a-b1bc-407c-bb05-83f0823196b1" />
+*
 
 ### 📚 Book Management
 > *(Add screenshot here)*
