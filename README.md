@@ -66,15 +66,23 @@ BookSphere is a full-stack Smart Library Management System designed to simplify 
 ### 🏠 Dashboard
 > *<img width="1361" height="639" alt="image" src="https://github.com/user-attachments/assets/ad74294a-b1bc-407c-bb05-83f0823196b1" />
 *
+> *<img width="1338" height="628" alt="image" src="https://github.com/user-attachments/assets/2067e6d7-48f3-4df9-b196-16ff49c2b7f3" />
+*
+> *<img width="1345" height="632" alt="image" src="https://github.com/user-attachments/assets/d1d61dd6-a02f-4921-aed4-a46989eee5d7" />
+*
+
 
 ### 📚 Book Management
-> *(Add screenshot here)*
+> *<img width="1364" height="643" alt="image" src="https://github.com/user-attachments/assets/28b9d8a2-863a-431a-b55c-2139cb13fe86" />
+*
 
 ### 👨‍🎓 Member Management
-> *(Add screenshot here)*
+> *<img width="1365" height="629" alt="image" src="https://github.com/user-attachments/assets/85b51352-fe19-4f42-b170-79badefc35e6" />
+*
 
 ### 🔄 Transaction Management
-> *(Add screenshot here)*
+> *<img width="1365" height="645" alt="image" src="https://github.com/user-attachments/assets/8e85c453-a3a8-40e1-b827-9015e63b15f5" />
+*
 
 ---
 
